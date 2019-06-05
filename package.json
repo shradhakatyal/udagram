@@ -28,7 +28,9 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
+    "@types/request": "^2.48.1",
     "express": "^4.17.0",
-    "jimp": "^0.6.4"
+    "jimp": "^0.6.4",
+    "request": "^2.88.0"
   }
 }

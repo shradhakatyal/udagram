@@ -1,5 +1,7 @@
 import fs from 'fs';
 import Jimp = require('jimp');
+import http from 'http';
+import request from 'request';
 
 // filterImageFromURL
 // helper function to download, filter, and save the filtered image locally
@@ -32,3 +34,30 @@ export async function deleteLocalFiles(files:Array<string>){
         fs.unlinkSync(file);
     }
 }
+
+export async function validateImageUrl(imageURL: string) {
+    return new Promise( async (resolve, reject) => {
+        if(!imageURL) {
+            reject("Image url is missing");
+        }
+        try {
+            request.get(imageURL)
+            .on('error', function(err: any) {
+                reject(err);
+            })
+            .on('response', function(response: any) {
+                if(response && response.headers["content-type"].indexOf("image") > -1) {
+                    resolve(true);
+                }
+                reject(false);
+            });
+        } catch(e) {
+            reject(e);
+        }
+        
+    });
+    
+}
+
+
+    
